@@ -4,80 +4,188 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Recomendaciones de Productos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #fafafa;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
       margin: 0;
-      padding: 20px;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    h1, h2 {
-      text-align: center;
-      color: #2c3e50;
-    }
-    form {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-    }
-    form input[type="text"],
-    form textarea,
-    form input[type="url"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 1em;
-      resize: vertical;
-    }
-    form button {
-      background-color: #2980b9;
-      border: none;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 5px;
-      font-size: 1em;
-      cursor: pointer;
-      width: 100%;
-      transition: background-color 0.3s;
-    }
-    form button:hover {
-      background-color: #1c5980;
-    }
-    #recomendaciones {
+      padding: 40px 20px;
+      color: #333;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      align-items: center;
     }
+
+    h1 {
+      color: #fff;
+      font-weight: 700;
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+
+    form {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px 25px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-bottom: 40px;
+      transition: box-shadow 0.3s ease;
+    }
+    form:hover {
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+
+    form h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #2c3e50;
+      font-weight: 700;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+      resize: vertical;
+    }
+    input[type="text"]:focus,
+    input[type="url"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #2575fc;
+      outline: none;
+      box-shadow: 0 0 8px #2575fcaa;
+    }
+
+    button {
+      background: #2575fc;
+      border: none;
+      color: white;
+      padding: 15px 0;
+      width: 100%;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 15px rgba(37, 117, 252, 0.5);
+    }
+    button:hover {
+      background: #145ddb;
+      box-shadow: 0 6px 20px rgba(20, 93, 219, 0.7);
+    }
+
+    #recomendaciones {
+      max-width: 800px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
     .recomendacion {
       background: white;
-      padding: 15px 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+      border-radius: 15px;
+      padding: 15px 20px 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
+    .recomendacion:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+
+    .recomendacion img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
     .recomendacion h3 {
-      margin: 0 0 10px;
-      color: #34495e;
+      margin-top: 0;
+      margin-bottom: 6px;
+      color: #1f2937;
+      font-weight: 700;
+      font-size: 1.3rem;
     }
+
+    .categoria {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #2575fc;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
     .recomendacion p {
-      margin: 0 0 10px;
-      color: #555;
+      color: #4a5568;
+      font-size: 1rem;
+      flex-grow: 1;
       white-space: pre-wrap;
+      margin-bottom: 18px;
+      line-height: 1.4;
     }
     .recomendacion a {
-      color: #2980b9;
+      align-self: flex-start;
+      background: #2575fc;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 3px 10px rgba(37, 117, 252, 0.5);
     }
     .recomendacion a:hover {
-      text-decoration: underline;
+      background: #145ddb;
+      box-shadow: 0 5px 15px rgba(20, 93, 219, 0.7);
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 20px 10px;
+      }
+      form, #recomendaciones {
+        width: 100%;
+      }
+      .recomendacion img {
+        height: 140px;
+      }
     }
   </style>
 </head>
@@ -86,14 +194,29 @@
 
   <form id="formRecomendacion">
     <h2>Agregar una recomendación</h2>
+
     <label for="titulo">Título:</label>
     <input type="text" id="titulo" placeholder="Nombre del producto" required />
+
+    <label for="categoria">Categoría:</label>
+    <select id="categoria" required>
+      <option value="" disabled selected>Selecciona una categoría</option>
+      <option value="Tecnología">Tecnología</option>
+      <option value="Deportes">Deportes</option>
+      <option value="Libros">Libros</option>
+      <option value="Hogar">Hogar</option>
+      <option value="Moda">Moda</option>
+      <option value="Otros">Otros</option>
+    </select>
 
     <label for="descripcion">Descripción:</label>
     <textarea id="descripcion" rows="4" placeholder="¿Por qué recomiendas este producto?" required></textarea>
 
     <label for="url">Enlace (URL):</label>
     <input type="url" id="url" placeholder="https://ejemplo.com/producto" required />
+
+    <label for="imagen">URL de la imagen (opcional):</label>
+    <input type="url" id="imagen" placeholder="https://ejemplo.com/imagen.jpg" />
 
     <button type="submit">Agregar recomendación</button>
   </form>
@@ -104,21 +227,26 @@
     const form = document.getElementById('formRecomendacion');
     const contenedor = document.getElementById('recomendaciones');
 
-    // Carga recomendaciones desde localStorage o crea arreglo vacío
     let recomendaciones = JSON.parse(localStorage.getItem('recomendaciones')) || [];
 
-    // Función para mostrar recomendaciones en la página
     function mostrarRecomendaciones() {
       contenedor.innerHTML = '';
       if (recomendaciones.length === 0) {
-        contenedor.innerHTML = '<p>No hay recomendaciones aún.</p>';
+        contenedor.innerHTML = '<p style="text-align:center; color:#fff; font-size:1.2rem;">No hay recomendaciones aún.</p>';
         return;
       }
       recomendaciones.forEach(rec => {
         const div = document.createElement('div');
         div.className = 'recomendacion';
+
+        const imgHTML = rec.imagen
+          ? `<img src="${rec.imagen}" alt="Imagen de ${rec.titulo}" onerror="this.style.display='none'">`
+          : '';
+
         div.innerHTML = `
+          ${imgHTML}
           <h3>${rec.titulo}</h3>
+          <div class="categoria">${rec.categoria}</div>
           <p>${rec.descripcion}</p>
           <a href="${rec.url}" target="_blank" rel="noopener noreferrer">Ver producto</a>
         `;
@@ -126,24 +254,23 @@
       });
     }
 
-    // Mostrar recomendaciones al cargar la página
     mostrarRecomendaciones();
 
-    // Al enviar el formulario
     form.addEventListener('submit', e => {
       e.preventDefault();
 
       const nuevaRec = {
         titulo: form.titulo.value.trim(),
+        categoria: form.categoria.value,
         descripcion: form.descripcion.value.trim(),
-        url: form.url.value.trim()
+        url: form.url.value.trim(),
+        imagen: form.imagen.value.trim()
       };
 
       recomendaciones.push(nuevaRec);
       localStorage.setItem('recomendaciones', JSON.stringify(recomendaciones));
 
       mostrarRecomendaciones();
-
       form.reset();
     });
   </script>
