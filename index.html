@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Recomendaciones de Productos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    form input[type="text"],
+    form textarea,
+    form input[type="url"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      resize: vertical;
+    }
+    form button {
+      background-color: #2980b9;
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s;
+    }
+    form button:hover {
+      background-color: #1c5980;
+    }
+    #recomendaciones {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .recomendacion {
+      background: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    }
+    .recomendacion h3 {
+      margin: 0 0 10px;
+      color: #34495e;
+    }
+    .recomendacion p {
+      margin: 0 0 10px;
+      color: #555;
+      white-space: pre-wrap;
+    }
+    .recomendacion a {
+      color: #2980b9;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .recomendacion a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Recomendaciones de Productos</h1>
+
+  <form id="formRecomendacion">
+    <h2>Agregar una recomendación</h2>
+    <label for="titulo">Título:</label>
+    <input type="text" id="titulo" placeholder="Nombre del producto" required />
+
+    <label for="descripcion">Descripción:</label>
+    <textarea id="descripcion" rows="4" placeholder="¿Por qué recomiendas este producto?" required></textarea>
+
+    <label for="url">Enlace (URL):</label>
+    <input type="url" id="url" placeholder="https://ejemplo.com/producto" required />
+
+    <button type="submit">Agregar recomendación</button>
+  </form>
+
+  <div id="recomendaciones"></div>
+
+  <script>
+    const form = document.getElementById('formRecomendacion');
+    const contenedor = document.getElementById('recomendaciones');
+
+    // Carga recomendaciones desde localStorage o crea arreglo vacío
+    let recomendaciones = JSON.parse(localStorage.getItem('recomendaciones')) || [];
+
+    // Función para mostrar recomendaciones en la página
+    function mostrarRecomendaciones() {
+      contenedor.innerHTML = '';
+      if (recomendaciones.length === 0) {
+        contenedor.innerHTML = '<p>No hay recomendaciones aún.</p>';
+        return;
+      }
+      recomendaciones.forEach(rec => {
+        const div = document.createElement('div');
+        div.className = 'recomendacion';
+        div.innerHTML = `
+          <h3>${rec.titulo}</h3>
+          <p>${rec.descripcion}</p>
+          <a href="${rec.url}" target="_blank" rel="noopener noreferrer">Ver producto</a>
+        `;
+        contenedor.appendChild(div);
+      });
+    }
+
+    // Mostrar recomendaciones al cargar la página
+    mostrarRecomendaciones();
+
+    // Al enviar el formulario
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const nuevaRec = {
+        titulo: form.titulo.value.trim(),
+        descripcion: form.descripcion.value.trim(),
+        url: form.url.value.trim()
+      };
+
+      recomendaciones.push(nuevaRec);
+      localStorage.setItem('recomendaciones', JSON.stringify(recomendaciones));
+
+      mostrarRecomendaciones();
+
+      form.reset();
+    });
+  </script>
+</body>
+</html>
